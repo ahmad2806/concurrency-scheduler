@@ -3,6 +3,23 @@
 //
 
 #include "Scheduler.h"
-int main() {
-    return 0;
+Scheduler::Scheduler() {
+    std::make_heap(tasks.begin(), tasks.end());
+}
+
+
+void Scheduler::add(const SharedPtr<Task> task) {
+    Time* time = new (Time);
+    time->set_time(task.get()->getNextRunPeriod() + time->now());
+
+    Task_Time t = std::make_pair(*time, task);
+    tasks.push_back(t);
+    std::push_heap(tasks.begin(), tasks.end());
+}
+
+
+Scheduler::~Scheduler() {}
+
+bool operator<  (const Task_Time& lhs, const Task_Time& rhs){
+    return true;
 }
