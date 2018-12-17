@@ -7,6 +7,10 @@
 
 
 class ITask {
+public:
+    virtual void run()= 0;
+    virtual unsigned long getNextRunPeriod()= 0;
+    virtual ~ITask()= 0;
 
 };
 

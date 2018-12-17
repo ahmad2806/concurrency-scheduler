@@ -5,12 +5,15 @@
 #ifndef SCHEDULER_TASK_H
 #define SCHEDULER_TASK_H
 
+#include "ITask.h"
 
+class Task : public ITask {
+public:
+    void run();
 
-class Task {
+    unsigned long getNextRunPeriod();
 
 };
-
 
 
 #endif //SCHEDULER_TASK_H
