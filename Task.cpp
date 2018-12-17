@@ -3,3 +3,19 @@
 //
 
 #include "Task.h"
+
+Task::Task() {
+
+}
+
+Task::~Task() {
+
+}
+
+void Task::run() {
+
+}
+
+unsigned long Task::getNextRunPeriod() {
+    return 0;
+}

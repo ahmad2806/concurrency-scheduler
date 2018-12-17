@@ -9,6 +9,8 @@
 
 class Task : public ITask {
 public:
+    Task();
+    ~Task();
     void run();
 
     unsigned long getNextRunPeriod();

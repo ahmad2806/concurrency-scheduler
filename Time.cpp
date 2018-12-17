@@ -18,7 +18,10 @@ size_t Time::now() {
     return 10;
 }
 
-Time& Time::operator+=(unsigned long a) { m_time += a; }
+Time& Time::operator+=(unsigned long a) {
+    m_time += a;
+    return *this;
+}
 
-bool Time::operator<(Time const &a) { return m_time > a.m_time}
+bool Time::operator<(Time const &a) { return m_time > a.m_time;}
 

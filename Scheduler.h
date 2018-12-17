@@ -12,7 +12,7 @@
 
 #ifndef SCHEDULER_SCHEDULER_H
 #define SCHEDULER_SCHEDULER_H
-typedef std::pair<Time, SharedPtr<Task> > Task_Time;
+typedef std::pair<Time*, SharedPtr<Task> > Task_Time;
 bool operator<  (const Task_Time& lhs, const Task_Time& rhs);
 
 class Scheduler {
