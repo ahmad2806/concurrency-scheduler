@@ -5,21 +5,23 @@
 #ifndef SCHEDULER_TIME_H
 #define SCHEDULER_TIME_H
 
+#include <ctime>
+#include <iostream>
 
 class Time {
 
 public:
     Time();
-    ~Time();
 
-    Time(Time const&);
-    Time& operator=(Time const & a);
+    static size_t now();
 
-
-    bool operator>(Time const & a);
+    size_t get_time();
+    void set_time(size_t new_time);
+    Time &operator+=(unsigned long a);
+    bool operator<(Time const &a);
 
 private:
-
+    size_t m_time;
 };
 
 
