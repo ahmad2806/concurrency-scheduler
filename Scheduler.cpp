@@ -22,11 +22,11 @@ void Scheduler::add(const SharedPtr<Task> task) {
 Scheduler::~Scheduler() {
     unsigned i;
     for (i = 0; i < tasks.size(); i++)
-        delete (std::get<0>(tasks[i]));
+        delete (tasks[i].first);
 }
 
 bool operator<(const Task_Time &lhs, const Task_Time &rhs) {
-    return true;
+    return lhs.first->get_time() < rhs.first->get_time();
 }
 
 void Scheduler::run() {
@@ -35,7 +35,7 @@ void Scheduler::run() {
         Task_Time current_task = tasks.front();
         unsigned long delta = (current_task.first->get_time() * -1) - t0->now();
         if (delta > 0)
-            usleep(delta);
+            usleep((useconds_t)delta);
         std::pop_heap(tasks.begin(), tasks.end());
         tasks.pop_back();
         current_task.second.get()->run();

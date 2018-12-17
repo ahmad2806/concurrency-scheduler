@@ -23,5 +23,5 @@ Time& Time::operator+=(unsigned long a) {
     return *this;
 }
 
-bool Time::operator<(Time const &a) { return m_time > a.m_time;}
+bool Time::operator<(Time const &other) { return m_time < other.m_time;}
 
