@@ -21,7 +21,7 @@ public:
     bool operator<(Time const &a);
 
 private:
-    size_t m_time;
+    unsigned long m_time;
 };
 
 
