@@ -10,7 +10,7 @@ Scheduler::Scheduler() {
 
 
 void Scheduler::add(const SharedPtr<Task> task) {
-    Time *time = new (Time);
+    Time *time = new Time;
     time->set_time((-1 * task.get()->getNextRunPeriod()) - time->now());
 
     Task_Time t = std::make_pair(time, task);
@@ -34,13 +34,15 @@ void Scheduler::run() {
     while (tasks.size() > 0) {
         Task_Time current_task = tasks.front();
         unsigned long delta = (current_task.first->get_time() * -1) - t0->now();
-        if (delta > 0)
+        if (delta > 0) {
+            std::cout << "Scheduler: i need to sleep for " << delta << std::endl;
             usleep((useconds_t)delta);
+        }
         std::pop_heap(tasks.begin(), tasks.end());
         tasks.pop_back();
         current_task.second.get()->run();
         // here i send the task to add function and destroy the time no matter what
-        // ! because in add new one will be created
+        // ! because in add, new one will be created
         if (current_task.second.get()->getNextRunPeriod() > 0)
             add(current_task.second);
 
