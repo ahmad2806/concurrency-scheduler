@@ -15,7 +15,7 @@
 
 #ifndef SCHEDULER_SCHEDULER_H
 #define SCHEDULER_SCHEDULER_H
-typedef std::pair<Time*, SharedPtr<Task> > Task_Time;
+typedef std::pair<Time*, SharedPtr<ITask> > Task_Time;
 bool operator<  (const Task_Time& lhs, const Task_Time& rhs);
 
 class Scheduler {
@@ -24,7 +24,7 @@ public:
 
     ~Scheduler();
 
-    void add(const SharedPtr<Task> task);
+    void add(SharedPtr<ITask> task);
 
 
     void run();

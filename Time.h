@@ -5,7 +5,7 @@
 #ifndef SCHEDULER_TIME_H
 #define SCHEDULER_TIME_H
 
-#include <ctime>
+#include <sys/time.h>
 #include <iostream>
 
 class Time {
@@ -13,14 +13,21 @@ class Time {
 public:
     Time();
 
-    static size_t now();
+    size_t now();
 
     size_t get_time();
+
     void set_time(size_t new_time);
-    Time &operator+=(unsigned long a);
+
+    Time &operator+=(size_t o_time);
+
     bool operator<(Time const &a);
 
 private:
+    static const int convert_hours_to_min = 60;
+    static const int convert_min_to_seconds = 60;
+    static const int convert_second_to_mille = 1000;
+    static const int convert_mille_to_micro= 1000;
     unsigned long m_time;
 };
 

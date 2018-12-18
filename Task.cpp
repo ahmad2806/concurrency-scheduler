@@ -13,14 +13,14 @@ Task::~Task() {
 }
 
 void Task::run() {
-    std::cout << m_name << ": " << "is running for " << m_time_iter << " mseconds " << "the task is "
-    << m_msg << "and has " << m_cycles-- << " more left" << std::endl;
+    std::cout << m_name << ": " << "is running for " << m_time_iter << " m_seconds, the task is "
+    << m_msg << " and has " << m_cycles-- << " more left" << std::endl;
 
-    usleep(m_time_iter*1000);
+    usleep(m_time_iter * 1000);
 }
 
 unsigned long Task::getNextRunPeriod() {
     if (m_cycles == 0)
         return 0;
-    return m_time_iter;
+    return m_time_iter * 1000 ;
 }

@@ -9,9 +9,9 @@ Scheduler::Scheduler() {
 }
 
 
-void Scheduler::add(const SharedPtr<Task> task) {
+void Scheduler::add(SharedPtr<ITask> task) {
     Time *time = new Time;
-    time->set_time((-1 * task.get()->getNextRunPeriod()) - time->now());
+    time->set_time(task.get()->getNextRunPeriod() + time->now());
 
     Task_Time t = std::make_pair(time, task);
     tasks.push_back(t);
@@ -26,17 +26,17 @@ Scheduler::~Scheduler() {
 }
 
 bool operator<(const Task_Time &lhs, const Task_Time &rhs) {
-    return lhs.first->get_time() < rhs.first->get_time();
+    return lhs.first->get_time() > rhs.first->get_time();
 }
 
 void Scheduler::run() {
-    Time *t0 = new Time;
+    Time t0;
     while (tasks.size() > 0) {
         Task_Time current_task = tasks.front();
-        unsigned long delta = (current_task.first->get_time() * -1) - t0->now();
+        long delta = current_task.first->get_time() - t0.now();
         if (delta > 0) {
-            std::cout << "Scheduler: i need to sleep for " << delta << std::endl;
-            usleep((useconds_t)delta);
+            std::cout << "Scheduler: i need to sleep for " << delta / 1000 << std::endl;
+            usleep((useconds_t) delta);
         }
         std::pop_heap(tasks.begin(), tasks.end());
         tasks.pop_back();
@@ -48,7 +48,6 @@ void Scheduler::run() {
 
         remove(current_task);
     }
-    delete t0;
 }
 
 void Scheduler::remove(Task_Time &t) {

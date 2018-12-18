@@ -2,4 +2,3 @@ CMakeLists.txt
 .idea/
 a
 cmake-build-debug/
-main.cpp

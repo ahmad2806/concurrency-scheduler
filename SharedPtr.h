@@ -17,9 +17,6 @@ public:
 
     operator bool() const;
 
-    template<typename U>
-    SharedPtr<T> &operator=(U *t);
-
     SharedPtr<T> &operator=(T *t);
 
     T *get() const;
@@ -28,6 +25,13 @@ public:
 
     SharedPtr &operator=(SharedPtr const &);
 
+    template<typename U>
+    SharedPtr<T> &operator=(U *t);
+
+    template<typename U>
+    SharedPtr(const SharedPtr<U> &other);
+
+    size_t* get_counter();
 private:
     T *m_ptr;
     size_t *m_counter;
@@ -40,6 +44,7 @@ SharedPtr<T>::SharedPtr(T *ptr): m_ptr(ptr) {
     m_counter = new size_t;
     *m_counter = 1;
 }
+
 template<typename T>
 template<typename U>
 SharedPtr<T> &SharedPtr<T>::operator=(U *ptr) {
@@ -51,6 +56,7 @@ SharedPtr<T> &SharedPtr<T>::operator=(U *ptr) {
     return *this;
 
 }
+
 template<typename T>
 SharedPtr<T>::~SharedPtr() {
     --(*m_counter);
@@ -122,5 +128,18 @@ SharedPtr<T> &SharedPtr<T>::operator=(SharedPtr const &other) {
 
 }
 
+template<typename U>
+size_t* SharedPtr<U>::get_counter() {
+    return m_counter;
+}
+
+
+template<typename T>
+template<typename U>
+SharedPtr<T>::SharedPtr(const SharedPtr<U> &other){
+    m_counter = other.get_counter();
+    m_ptr = other.get();
+    ++(*m_counter);
+}
 
 #endif //EXCELLENTEAM_EREZ_CPP_SMART_POINTERS_AHMAD2806_SHAREDPTR_H
